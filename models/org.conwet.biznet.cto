@@ -29,6 +29,7 @@ enum AgreementState {
   o ACTIVE
 }
 
+
 // Participants
 
 abstract participant User identified by userId{
@@ -56,11 +57,53 @@ asset Offering identified by offerId{
   --> Dataset dataset
 }
 
+asset TangleStream identified by root{
+  o String side_key // encrypted with the other's public key
+  o String root // encrypted with the other's public key
+}
+
 asset Agreement identified by agreementId{
   o String agreementId
+  o DateTime timestamp
   o AgreementState state
+  o TangleStream queryStream
+  o TangleStream dataStream
   --> Offering offer
   --> Customer customer
+}
+
+// Transactions
+
+transaction CreateDataset {
+  o String root
+  --> Seller owner
+}
+
+transaction MakeAgreement {
+  --> Offering offering
+  --> Customer customer
+  --> TangleStream queryStream
+}
+
+transaction CreateOffering {
+  o String offeringId
+  o PricingModel pricingModel
+  --> Dataset dataset
+}
+
+transaction PaymentCompleted {
+  --> Agreement agreement
+  o String proofOfPayment
+}
+
+transaction AcceptAgreement {
+  --> Agreement agreement
+  --> TangleStream dataStream
+}
+
+transaction SettleAgreement {
+  --> Agreement agreement
+  o Boolean renew
 }
 
 // Events
@@ -74,6 +117,7 @@ event MakeAgreementEvent {
   o String transactionId
   --> Offering offering
   --> Customer customer 
+  --> TangleStream queryStream
 }
 
 event CreateOfferingEvent{
@@ -82,26 +126,17 @@ event CreateOfferingEvent{
   --> Dataset dataset
 }
 
-// Transactions
-
-transaction CreateDataset {
-  o String root
-  --> Seller owner
+event PaymentCompletedEvent {
+  --> Agreement agreement
+  o String proofOfPayment
 }
 
-transaction MakeAgreement {
-  --> Offering offering
-  --> Customer customer
+event AcceptAgreementEvent {
+  --> Agreement agreement
+  --> TangleStream dataStream
 }
 
-transaction CreateOffering {
-  o String offeringId
-  o PricingModel pricingModel
-  --> Dataset dataset
-}
-
-transaction SettleAgreement {
-  o String offeringId
-  o PricingModel pricingModel
-  --> Dataset dataset
+event SettleAgreementEvent {
+  --> Agreement agreement
+  o Boolean renew
 }
