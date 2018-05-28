@@ -46,8 +46,10 @@ participant Customer extends User {
 
 // Assets
 
-asset Dataset identified by root{
-  o String root
+asset Dataset identified by id{
+  o String id
+  o String data
+  o String description
   --> Seller owner
 }
 
@@ -57,11 +59,21 @@ asset Offering identified by offerId{
   --> Dataset dataset
 }
 
+// encrypted with the other's public key
 asset TangleStream identified by root{
-  o String side_key // encrypted with the other's public key
-  o String root // encrypted with the other's public key
+  o String side_key
+  o String root 
 }
 
+asset Agreement identified by agreementId{
+  o String agreementId
+  o DateTime timestamp
+  o AgreementState state
+  o TangleStream queryStream
+  o TangleStream dataStream
+  --> Offering offering
+  --> Customer customer
+}
 asset Agreement identified by agreementId{
   o String agreementId
   o DateTime timestamp
