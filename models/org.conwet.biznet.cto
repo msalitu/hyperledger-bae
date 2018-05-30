@@ -46,15 +46,15 @@ participant Customer extends User {
 
 // Assets
 
-asset Dataset identified by id{
-  o String id
-  o String data
+asset Dataset identified by datasetId{
+  o String datasetId
+  o String dataContent
   o String description
   --> Seller owner
 }
 
-asset Offering identified by offerId{
-  o String offerId
+asset Offering identified by offeringId{
+  o String offeringId
   o PricingModel pricingModel
   --> Dataset dataset
 }
@@ -74,20 +74,12 @@ asset Agreement identified by agreementId{
   --> Offering offering
   --> Customer customer
 }
-asset Agreement identified by agreementId{
-  o String agreementId
-  o DateTime timestamp
-  o AgreementState state
-  o TangleStream queryStream
-  o TangleStream dataStream
-  --> Offering offer
-  --> Customer customer
-}
 
 // Transactions
 
 transaction CreateDataset {
-  o String root
+  o String dataContent
+  o String description
   --> Seller owner
 }
 
