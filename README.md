@@ -35,7 +35,11 @@ cd ~/fabric-dev-server
 ## Iniciar fabric 
 ```
 cd ~/fabric-dev-server
+```
+```
 ./start-fabric
+```
+```
 ./createPeerAdminCard.sh
 ```
 Para obtener los ficheros de nuestra configuracion, si es la primera vez ejecuta:
