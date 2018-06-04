@@ -1,18 +1,99 @@
-/**
- * Access control rules for tutorial-network
- */
-rule Default {
-    description: "Allow all participants access to all resources"
-    participant: "ANY"
-    operation: ALL
-    resource: "org.conwet.biznet.*"
-    action: ALLOW
+rule DatasetCustomerRead{
+  description:  "Allows the Customer to READ Datasets"
+  participant:  "org.conwet.biznet.Customer"
+  operation:    READ
+  resource:     "org.conwet.biznet.Dataset"
+  action: ALLOW
+}
+
+rule DatasetSellerCreateUpdate{
+  description:     "Allows the Seller to CREATE Datasets and UPDATE theirs"
+  participant(p):  "org.conwet.biznet.Seller"
+  operation:       CREATE, UPDATE
+  resource(r):     "org.conwet.biznet.Dataset"
+  condition:       (r.owner.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
+rule DatasetSellerRead{
+  description:     "Allows the Seller to READ Datasets"
+  participant:     "org.conwet.biznet.Seller"
+  operation:       READ
+  resource:        "org.conwet.biznet.Dataset"
+  action: ALLOW
+}
+
+rule OfferingCustomerCreateUpdate{
+  description:     "Allows the Customer to CREATE Offerings and UPDATE theirs"
+  participant(p):  "org.conwet.biznet.Customer"
+  operation:       CREATE, UPDATE
+  resource(r):     "org.conwet.biznet.Offering"
+  condition:       (r.dataset.owner.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
+rule OfferingCustomerRead{
+  description:     "Allows the Customer to READ Offerings"
+  participant:     "org.conwet.biznet.Customer"
+  operation:       READ
+  resource:        "org.conwet.biznet.Offering"
+  action: ALLOW
+}
+
+rule OfferingSellerRead{
+  description:     "Allows the Seller to READ Offerings"
+  participant:     "org.conwet.biznet.Seller"
+  operation:       READ
+  resource:        "org.conwet.biznet.Offering"
+  action: ALLOW
+}
+
+rule OfferingSellerCreateUpdate{
+  description:     "Allows the Seller to CREATE Oferrings and UPDATE theirs"
+  participant:     "org.conwet.biznet.Seller"
+  operation:       READ
+  resource:        "org.conwet.biznet.Offering"
+  action: ALLOW
+}
+
+rule AgreementSellerRead{
+  description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
+  participant(p):  "org.conwet.biznet.Seller"
+  operation:       READ
+  resource(r):     "org.conwet.biznet.Agreement"
+  condition:       (p.getIdentifier() == r.offer.dataset.owner.getIdentifier())
+  action: ALLOW
+}
+
+rule AgreementCustomerRead{
+  description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
+  participant(p):  "org.conwet.biznet.Customer"
+  operation:       READ
+  resource(r):     "org.conwet.biznet.Agreement"
+  condition:       (p.getIdentifier() == r.customer.getIdentifier())
+  action: ALLOW
 }
 
 rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "ANY"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
+    description: "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
 }
