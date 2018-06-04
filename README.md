@@ -37,9 +37,15 @@ cd ~/fabric-dev-server
 cd ~/fabric-dev-server
 ./start-fabric
 ./createPeerAdminCard.sh
-
+```
+Para obtener los ficheros de nuestra configuracion, si es la primera vez ejecuta:
+```
 git clone https://github.com/msalitu/hyperledger-bae.git
-
+cd hyperledger-bae
+```
+Si no es la primera vez, ejecuta simplemente:
+```
+git pull
 cd hyperledger-bae
 ```
 ## Si se hace cualquier cambio en un fichero hay que generar de nuevo el .bna
