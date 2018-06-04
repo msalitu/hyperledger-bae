@@ -38,8 +38,8 @@ participant User identified by userId{
 
 // Assets
 
-asset Dataset identified by id{
-  o String id
+asset Dataset identified by datasetId{
+  o String datasetId
   o String data
   o String description
   --> User owner
@@ -51,7 +51,7 @@ asset Offering identified by offerId{
   --> Dataset dataset
 }
 
-// encrypted with the other's public key
+// Encrypted with the other's public key
 asset TangleStream identified by root{
   o String side_key
   o String root 
@@ -70,7 +70,7 @@ asset Agreement identified by agreementId{
 // Transactions
 
 transaction CreateDataset {
-  o String id
+  o String datasetId
   o String data
   o String description
   --> User owner
@@ -106,7 +106,7 @@ transaction SettleAgreement {
 // Events
 
 event CreateDatasetEvent {
-  o String id
+  o String datasetId
   o String data
   o String description
   --> User owner
