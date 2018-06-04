@@ -70,7 +70,9 @@ asset Agreement identified by agreementId{
 // Transactions
 
 transaction CreateDataset {
-  o String root
+  o String id
+  o String data
+  o String description
   --> User owner
 }
 
@@ -104,7 +106,9 @@ transaction SettleAgreement {
 // Events
 
 event CreateDatasetEvent {
-  o String root
+  o String id
+  o String data
+  o String description
   --> User owner
 }
 

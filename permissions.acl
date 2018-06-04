@@ -1,39 +1,79 @@
-rule DatasetUserCreateUpdate{
-  description:     "Allows the Seller to CREATE Datasets and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.User"
-  operation:       CREATE, UPDATE
-  resource(r):     "org.conwet.biznet.Dataset"
-  condition:       (r.owner.getIdentifier() == p.getIdentifier())
-  action: ALLOW
+rule EverybodyCanSubmitTransactionCreateDataset {
+    description: "Allow all participants to submit transactions"
+    participant: "org.conwet.biznet.User"
+    operation: CREATE
+    resource: "org.conwet.biznet.CreateDataset"
+    action: ALLOW
 }
 
-rule DatasetUserRead{
-  description:     "Allows the Seller to READ Datasets"
+rule EverybodyCanSubmitTransactionCreateOffering {
+    description: "Allow all participants to submit transactions"
+    participant: "org.conwet.biznet.User"
+    operation: CREATE
+    resource: "org.conwet.biznet.CreateOffering"
+    action: ALLOW
+}
+
+rule EverybodyCanSubmitTransactionMakeAgreement {
+    description: "Allow all participants to submit transactions"
+    participant: "org.conwet.biznet.User"
+    operation: CREATE
+    resource: "org.conwet.biznet.MakeAgreement"
+    action: ALLOW
+}
+
+rule EverybodyCanSubmitTransactionPaymentCompleted {
+    description: "Allow all participants to submit transactions"
+    participant: "org.conwet.biznet.User"
+    operation: CREATE
+    resource: "org.conwet.biznet.PaymentCompleted"
+    action: ALLOW
+}
+
+rule EverybodyCanSubmitTransactionSettleAgreement {
+    description: "Allow all participants to submit transactions"
+    participant: "org.conwet.biznet.User"
+    operation: CREATE
+    resource: "org.conwet.biznet.SettleAgreement"
+    action: ALLOW
+}
+
+rule OwnersHasFullAccessToTheirDatasets{
+    description: "Allow all participants full access to their assets"
+    participant(p): "org.conwet.biznet.User"
+    operation: ALL
+    resource(r): "org.conwet.biznet.Dataset"
+    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule OwnersHasFullAccessToTheirOfferings {
+    description: "Allow all participants full access to their assets"
+    participant(p): "org.conwet.biznet.User"
+    operation: ALL
+    resource(r): "org.conwet.biznet.Offering"
+    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule EverybodyCanReadDatasets{
+  description:     "Allows all USERs to READ Datasets"
   participant:     "org.conwet.biznet.User"
   operation:       READ
   resource:        "org.conwet.biznet.Dataset"
   action: ALLOW
 }
 
-rule OfferingUserCreateUpdate{
-  description:     "Allows the Customer to CREATE Offerings and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.User"
-  operation:       CREATE, UPDATE
-  resource(r):     "org.conwet.biznet.Offering"
-  condition:       (r.dataset.owner.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
-rule OfferingUserRead{
-  description:     "Allows the Customer to READ Offerings"
+rule EverybodyCanReadOffering{
+  description:     "Allows all USERs to READ Offerings"
   participant:     "org.conwet.biznet.User"
   operation:       READ
   resource:        "org.conwet.biznet.Offering"
   action: ALLOW
 }
 
-rule AgreementSellerRead{
-  description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
+rule ImpliedSellerCanReadAgreement{
+  description:     "Allows the Seller to READ his agreements"
   participant(p):  "org.conwet.biznet.User"
   operation:       READ
   resource(r):     "org.conwet.biznet.Agreement"
@@ -41,8 +81,8 @@ rule AgreementSellerRead{
   action: ALLOW
 }
 
-rule AgreementCustomerRead{
-  description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
+rule ImpliedCustomerCanReadAgreement{
+  description:     "Allows the Customer to READ his agreements"
   participant(p):  "org.conwet.biznet.User"
   operation:       READ
   resource(r):     "org.conwet.biznet.Agreement"
