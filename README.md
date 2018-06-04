@@ -33,6 +33,7 @@ cd ~/fabric-dev-server
 
 
 ## Iniciar fabric 
+Utilizar estos comandos de uno en uno comprobando que aparezca el mensaje `Command succeeded`
 ```
 cd ~/fabric-dev-server
 ```
@@ -61,18 +62,20 @@ composer archive create -t dir -n .
 
 
 ## Desplegar la business network
+
+Instalar la bunsiness network en el peer, hace falta una business network card
 ```
 composer network install --card PeerAdmin@hlfv1 --archiveFile conwet-network@0.0.1.bna
-
+```
+Start la business network, hace falta una business network card y crear identitiy del administrador de la business network
+```
 composer network start --networkName conwet-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
-
+```
+Se importa la identidad del administrador de la business network como business network card
+```
 composer card import --file networkadmin.card
 ```
-
-
-
-
-## Para comprobar el deployment
+Para comprobar que la business network se ha desplegado correctamente:
 ```
 composer network ping --card admin@conwet-network
 ```
