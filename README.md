@@ -40,13 +40,13 @@ cd ~/fabric-dev-server
 ```
 Para obtener los ficheros de nuestra configuracion, si es la primera vez ejecuta:
 ```
-git clone https://github.com/msalitu/hyperledger-bae.git
 cd hyperledger-bae
+git clone https://github.com/msalitu/hyperledger-bae.git
 ```
 Si no es la primera vez, ejecuta simplemente:
 ```
-git pull
 cd hyperledger-bae
+git pull
 ```
 ## Si se hace cualquier cambio en un fichero hay que generar de nuevo el .bna
 ```
