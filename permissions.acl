@@ -1,56 +1,32 @@
-rule DatasetCustomerRead{
-  description:  "Allows the Customer to READ Datasets"
-  participant:  "org.conwet.biznet.Customer"
-  operation:    READ
-  resource:     "org.conwet.biznet.Dataset"
-  action: ALLOW
-}
-
-rule DatasetSellerCreateUpdate{
+rule DatasetUserCreateUpdate{
   description:     "Allows the Seller to CREATE Datasets and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.Seller"
+  participant(p):  "org.conwet.biznet.User"
   operation:       CREATE, UPDATE
   resource(r):     "org.conwet.biznet.Dataset"
   condition:       (r.owner.getIdentifier() == p.getIdentifier())
   action: ALLOW
 }
 
-rule DatasetSellerRead{
+rule DatasetUserRead{
   description:     "Allows the Seller to READ Datasets"
-  participant:     "org.conwet.biznet.Seller"
+  participant:     "org.conwet.biznet.User"
   operation:       READ
   resource:        "org.conwet.biznet.Dataset"
   action: ALLOW
 }
 
-rule OfferingCustomerCreateUpdate{
+rule OfferingUserCreateUpdate{
   description:     "Allows the Customer to CREATE Offerings and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.Customer"
+  participant(p):  "org.conwet.biznet.User"
   operation:       CREATE, UPDATE
   resource(r):     "org.conwet.biznet.Offering"
   condition:       (r.dataset.owner.getIdentifier() == p.getIdentifier())
   action: ALLOW
 }
 
-rule OfferingCustomerRead{
+rule OfferingUserRead{
   description:     "Allows the Customer to READ Offerings"
-  participant:     "org.conwet.biznet.Customer"
-  operation:       READ
-  resource:        "org.conwet.biznet.Offering"
-  action: ALLOW
-}
-
-rule OfferingSellerRead{
-  description:     "Allows the Seller to READ Offerings"
-  participant:     "org.conwet.biznet.Seller"
-  operation:       READ
-  resource:        "org.conwet.biznet.Offering"
-  action: ALLOW
-}
-
-rule OfferingSellerCreateUpdate{
-  description:     "Allows the Seller to CREATE Oferrings and UPDATE theirs"
-  participant:     "org.conwet.biznet.Seller"
+  participant:     "org.conwet.biznet.User"
   operation:       READ
   resource:        "org.conwet.biznet.Offering"
   action: ALLOW
@@ -58,7 +34,7 @@ rule OfferingSellerCreateUpdate{
 
 rule AgreementSellerRead{
   description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.Seller"
+  participant(p):  "org.conwet.biznet.User"
   operation:       READ
   resource(r):     "org.conwet.biznet.Agreement"
   condition:       (p.getIdentifier() == r.offer.dataset.owner.getIdentifier())
@@ -67,7 +43,7 @@ rule AgreementSellerRead{
 
 rule AgreementCustomerRead{
   description:     "Allows the Seller to CREATE Agreements and UPDATE theirs"
-  participant(p):  "org.conwet.biznet.Customer"
+  participant(p):  "org.conwet.biznet.User"
   operation:       READ
   resource(r):     "org.conwet.biznet.Agreement"
   condition:       (p.getIdentifier() == r.customer.getIdentifier())
