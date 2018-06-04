@@ -32,29 +32,21 @@ enum AgreementState {
 
 // Participants
 
-abstract participant User identified by userId{
+participant User identified by userId{
   o String userId
-}
-
-participant Seller extends User{
-
-}
-
-participant Customer extends User {
-
 }
 
 // Assets
 
-asset Dataset identified by datasetId{
-  o String datasetId
-  o String dataContent
+asset Dataset identified by id{
+  o String id
+  o String data
   o String description
-  --> Seller owner
+  --> User owner
 }
 
-asset Offering identified by offeringId{
-  o String offeringId
+asset Offering identified by offerId{
+  o String offerId
   o PricingModel pricingModel
   --> Dataset dataset
 }
@@ -71,21 +63,20 @@ asset Agreement identified by agreementId{
   o AgreementState state
   o TangleStream queryStream
   o TangleStream dataStream
-  --> Offering offering
-  --> Customer customer
+  --> Offering offer
+  --> User customer
 }
 
 // Transactions
 
 transaction CreateDataset {
-  o String dataContent
-  o String description
-  --> Seller owner
+  o String root
+  --> User owner
 }
 
 transaction MakeAgreement {
   --> Offering offering
-  --> Customer customer
+  --> User customer
   --> TangleStream queryStream
 }
 
@@ -114,13 +105,13 @@ transaction SettleAgreement {
 
 event CreateDatasetEvent {
   o String root
-  --> Seller owner
+  --> User owner
 }
 
 event MakeAgreementEvent {
   o String transactionId
   --> Offering offering
-  --> Customer customer 
+  --> User customer 
   --> TangleStream queryStream
 }
 
