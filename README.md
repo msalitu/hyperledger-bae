@@ -12,7 +12,7 @@ cd ~/fabric-dev-servers
 ./downloadFabric.sh
 rm -fr ~/.composer
 
-## Opcional pero casi nunca hace falta, realizar este comando y proceder como si se instalase por primera vez
+Opcional pero casi nunca hace falta, realizar este comando y proceder como si se instalase por primera vez
 rm -rf ~/fabric-dev-servers
 
 
