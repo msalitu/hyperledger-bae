@@ -38,7 +38,7 @@ Utilizar estos comandos de uno en uno comprobando que aparezca el mensaje `Comma
 cd ~/fabric-dev-server
 ```
 ```
-./start-fabric
+./startfabric.sh
 ```
 ```
 ./createPeerAdminCard.sh
